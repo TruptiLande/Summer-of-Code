@@ -1,0 +1,44 @@
+def minimum_power(n, k, A, B, avengers):
+    avenger_positions = set(avengers)
+    dp = {}
+    
+    def solve(l, r):
+        if (l, r) in dp:
+            return dp[(l, r)]
+        
+        if l == r:
+            if l in avenger_positions:
+                power = B
+            else:
+                power = A
+            dp[(l, r)] = power
+            return power
+        
+        # Count avengers in current range
+        avengers_in_range = sum(1 for i in range(l, r + 1) if i in avenger_positions)
+        
+        if avengers_in_range == 0:
+            power = A * (r - l + 1)
+        else:
+            mid = (l + r) // 2
+            power = solve(l, mid) + solve(mid + 1, r)
+        
+        dp[(l, r)] = power
+        return power
+    
+    return solve(1, 2**n)
+
+# Reading input
+import sys
+input = sys.stdin.read
+data = input().split()
+
+n = int(data[0])
+k = int(data[1])
+A = int(data[2])
+B = int(data[3])
+avengers = list(map(int, data[4:4 + k]))
+
+# Calculate and print the result
+result = minimum_power(n, k, A, B, avengers)
+print(result)
