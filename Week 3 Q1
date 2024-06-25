@@ -1,0 +1,43 @@
+def compute_depths(permutation):
+    n = len(permutation)
+    max_element = max(permutation)
+    max_index = permutation.index(max_element)
+    
+    depths = [0] * n
+    
+    # Function to assign depths recursively
+    def assign_depths(left, right, depth):
+        if left <= right:
+            # Find the maximum element in the current range
+            max_value = max(permutation[left:right + 1])
+            max_index = permutation.index(max_value, left, right + 1)
+            
+            # Assign depth to the current max_index
+            depths[max_index] = depth
+            
+            # Recursively assign depths to left and right subtrees
+            assign_depths(left, max_index - 1, depth + 1)
+            assign_depths(max_index + 1, right, depth + 1)
+    
+    # Start assigning depths from the root
+    assign_depths(0, n - 1, 0)
+    
+    return depths
+
+# Reading input
+t = int(input().strip())
+results = []
+
+for _ in range(t):
+    n = int(input().strip())
+    permutation = list(map(int, input().strip().split()))
+    
+    # Compute depths for current permutation
+    depths = compute_depths(permutation)
+    
+    # Store result for current test case
+    results.append(depths)
+
+# Output results
+for result in results:
+    print(' '.join(map(str, result)))
