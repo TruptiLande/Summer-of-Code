@@ -1,0 +1,31 @@
+def count_subarrays_with_at_most_k_distinct(n, k, arr):
+    from collections import defaultdict
+
+    left = 0
+    count = 0
+    freq_map = defaultdict(int)
+    distinct_count = 0
+
+    for right in range(n):
+        # Add the current element to the frequency map
+        if freq_map[arr[right]] == 0:
+            distinct_count += 1
+        freq_map[arr[right]] += 1
+
+        # If we have more than k distinct elements, shrink the window from the left
+        while distinct_count > k:
+            freq_map[arr[left]] -= 1
+            if freq_map[arr[left]] == 0:
+                distinct_count -= 1
+            left += 1
+
+        # The number of subarrays with at most k distinct values ending at `right`
+        count += (right - left + 1)
+
+    return count
+
+# Example usage
+n = 5
+k = 2
+arr = [1, 2, 3, 1, 1]
+print(count_subarrays_with_at_most_k_distinct(n, k, arr))  # Output: 10
