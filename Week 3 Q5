@@ -1,0 +1,34 @@
+def are_equivalent(a, b):
+    # Base case: if both strings are the same
+    if a == b:
+        return True
+    
+    n = len(a)
+    
+    # Check if they can be split into halves
+    if n % 2 == 1:
+        return False
+    
+    mid = n // 2
+    
+    # Split strings into halves
+    a1, a2 = a[:mid], a[mid:]
+    b1, b2 = b[:mid], b[mid:]
+    
+    # Check both possible equivalences
+    return (are_equivalent(a1, b1) and are_equivalent(a2, b2)) or \
+           (are_equivalent(a1, b2) and are_equivalent(a2, b1))
+
+# Reading input
+import sys
+input = sys.stdin.read
+data = input().split()
+
+a = data[0]
+b = data[1]
+
+# Check if strings are equivalent
+if are_equivalent(a, b):
+    print("YES")
+else:
+    print("NO")
