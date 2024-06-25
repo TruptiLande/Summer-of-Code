@@ -1,0 +1,57 @@
+import sys
+input = sys.stdin.read
+
+def min_swaps_to_sort(p):
+    n = len(p)
+    if sorted(p) == p:
+        return 0
+    
+    # Bit-reversal permutation
+    q = [0] * n
+    for i in range(n):
+        q[i] = p[int(bin(i)[2:].zfill(len(bin(n-1))-2)[::-1], 2)]
+    
+    # Calculate minimum swaps to sort p to q
+    swaps = 0
+    visited = [False] * n
+    
+    for i in range(n):
+        if visited[i] or q[i] == p[i]:
+            continue
+        cycle_size = 0
+        j = i
+        while not visited[j]:
+            visited[j] = True
+            j = p.index(q[j])
+            cycle_size += 1
+        if cycle_size > 0:
+            swaps += (cycle_size - 1)
+    
+    return swaps
+
+def solve():
+    data = input().strip().split()
+    t = int(data[0])
+    index = 1
+    results = []
+    
+    for _ in range(t):
+        m = int(data[index])
+        p = list(map(int, data[index + 1:index + 1 + m]))
+        index += 1 + m
+        
+        n = len(bin(m-1)) - 2  # Height of the complete binary tree
+        
+        # Check if the permutation is already sorted
+        if sorted(p) == p:
+            results.append("0")
+            continue
+        
+        # Calculate minimum swaps to make the permutation sorted (bit-reversal method)
+        min_swaps = min_swaps_to_sort(p)
+        
+        results.append(str(min_swaps))
+    
+    # Output results
+    sys.stdout.write("\n".join(results) + "\n")
+
