@@ -1,0 +1,33 @@
+def find_four_values_sum(n, x, arr):
+    from collections import defaultdict
+
+    # Dictionary to store the sums of pairs
+    pair_sum = defaultdict(list)
+
+    # Storing all possible pairs and their sums
+    for i in range(n):
+        for j in range(i + 1, n):
+            current_sum = arr[i] + arr[j]
+            pair_sum[current_sum].append((i, j))
+
+    # Iterating again to find complementary pairs
+    for i in range(n):
+        for j in range(i + 1, n):
+            current_sum = arr[i] + arr[j]
+            needed_sum = x - current_sum
+
+            if needed_sum in pair_sum:
+                for (k, l) in pair_sum[needed_sum]:
+                    # Ensure all indices are distinct
+                    if k != i and k != j and l != i and l != j:
+                        print(i + 1, j + 1, k + 1, l + 1)
+                        return
+
+    # If no such four elements found
+    print("IMPOSSIBLE")
+
+# Example usage
+n = 8
+x = 15
+arr = [3, 2, 5, 8, 1, 3, 2, 3]
+find_four_values_sum(n, x, arr)
