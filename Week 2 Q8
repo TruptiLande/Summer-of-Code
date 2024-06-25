@@ -1,0 +1,37 @@
+def max_pillows_for_frodo(n, m, k):
+    def total_pillows_needed(p):
+        total = p
+
+        # Calculate pillows needed to the left of Frodo
+        if k > 1:
+            if p > k - 1:
+                left_needed = (p - 1) * (p - k) // 2 + k - 1
+            else:
+                left_needed = (p - 1) * p // 2
+            total += left_needed
+
+        # Calculate pillows needed to the right of Frodo
+        if k < n:
+            if p > n - k:
+                right_needed = (p - 1) * (p - (n - k + 1)) // 2 + n - k
+            else:
+                right_needed = (p - 1) * p // 2
+            total += right_needed
+
+        return total
+
+    lo, hi = 1, m
+
+    while lo < hi:
+        mid = (lo + hi + 1) // 2
+        if total_pillows_needed(mid) <= m:
+            lo = mid
+        else:
+            hi = mid - 1
+
+    return lo
+
+# Example usage
+print(max_pillows_for_frodo(4, 6, 2))  # Output: 2
+print(max_pillows_for_frodo(3, 10, 3)) # Output: 4
+print(max_pillows_for_frodo(3, 6, 1))  # Output: 3
