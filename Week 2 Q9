@@ -1,0 +1,54 @@
+def can_complete_level(n, segments, k):
+    current_min = 0  # Start position at 0
+    current_max = 0
+    
+    for i in range(n):
+        l, r = segments[i]
+        # Calculate new feasible range after moving to segment i
+        new_min = max(current_min - k, l)
+        new_max = min(current_max + k, r)
+        
+        # If there's no overlap between new_min and new_max, k is not sufficient
+        if new_min > new_max:
+            return False
+        
+        # Update current_min and current_max for the next iteration
+        current_min = new_min
+        current_max = new_max
+    
+    return True
+
+def min_k_to_complete_levels(t, test_cases):
+    results = []
+    
+    for case in test_cases:
+        n = case[0]
+        segments = case[1]
+        
+        # Binary search for minimum k
+        left, right = 0, 10**9
+        while left < right:
+            mid = (left + right) // 2
+            if can_complete_level(n, segments, mid):
+                right = mid
+            else:
+                left = mid + 1
+        
+        results.append(left)
+    
+    return results
+
+# Reading input
+import sys
+input = sys.stdin.read
+data = input().split()
+idx = 0
+t = int(data[idx])
+idx += 1
+
+test_cases = []
+for _ in range(t):
+    n = int(data[idx])
+    idx += 1
+    segments = []
+    for _ in range
