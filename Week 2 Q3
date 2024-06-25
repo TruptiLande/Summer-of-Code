@@ -1,0 +1,25 @@
+def count_substrings_with_k_ones(k, s):
+    prefix_sum = 0
+    count_map = {0: 1}  # To handle the case where the prefix sum itself is k
+    count = 0
+
+    for char in s:
+        if char == '1':
+            prefix_sum += 1
+
+        # Check if there exists a prefix_sum - k in the map
+        if prefix_sum - k in count_map:
+            count += count_map[prefix_sum - k]
+
+        # Update the frequency of the current prefix sum
+        if prefix_sum in count_map:
+            count_map[prefix_sum] += 1
+        else:
+            count_map[prefix_sum] = 1
+
+    return count
+
+# Example usage
+print(count_substrings_with_k_ones(1, "1010"))  # Output: 6
+print(count_substrings_with_k_ones(2, "01010"))  # Output: 4
+print(count_substrings_with_k_ones(100, "01010"))  # Output: 0
