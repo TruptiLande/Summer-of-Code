@@ -1,35 +1,5 @@
 # Summer-of-Code
 Week 2 Problems
-def searchRange(nums, target):
-    def findLeft(nums, target):
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            mid = left + (right - left) // 2
-            if nums[mid] < target:
-                left = mid + 1
-            else:
-                right = mid - 1
-        return left
 
-    def findRight(nums, target):
-        left, right = 0, len(nums) - 1
-        while left <= right:
-            mid = left + (right - left) // 2
-            if nums[mid] <= target:
-                left = mid + 1
-            else:
-                right = mid - 1
-        return right
 
-    left = findLeft(nums, target)
-    right = findRight(nums, target)
-
-    # Check if the target is actually within the bounds found
-    if left <= right and left < len(nums) and nums[left] == target and nums[right] == target:
-        return [left, right]
-    return [-1, -1]
-
-# Example usage
-print(searchRange([5,7,7,8,8,10], 8))  # Output: [3, 4]
-print(searchRange([5,7,7,8,8,10], 6))  # Output: [-1, -1]
-print(searchRange([], 0))  # Output: [-1, -1]
+   
