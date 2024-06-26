@@ -1,0 +1,37 @@
+# Function to determine the minimum number of ropes to cut for a single test case
+def min_cuts_to_drop_candy(nails):
+    # Sort nails by height
+    nails.sort()
+    
+    # Count the number of ropes that need to be cut
+    cuts = 0
+    for height, length in nails:
+        if height - length > 0:
+            cuts += 1
+    return cuts
+
+# Read input
+import sys
+input = sys.stdin.read
+data = input().split()
+
+t = int(data[0])
+index = 1
+
+results = []
+
+# Process each test case
+for _ in range(t):
+    n = int(data[index])
+    index += 1
+    nails = []
+    for _ in range(n):
+        a = int(data[index])
+        b = int(data[index+1])
+        nails.append((a, b))
+        index += 2
+    results.append(min_cuts_to_drop_candy(nails))
+
+# Output results for each test case
+for result in results:
+    print(result)
