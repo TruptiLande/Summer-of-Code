@@ -1,0 +1,19 @@
+# Function to determine if any two digits sum to 10 or more
+def check_pairs(a, b, c):
+    if a + b >= 10 or a + c >= 10 or b + c >= 10:
+        return "YES"
+    else:
+        return "NO"
+
+# Read input
+t = int(input().strip())
+results = []
+
+# Process each test case
+for _ in range(t):
+    a, b, c = map(int, input().strip().split())
+    results.append(check_pairs(a, b, c))
+
+# Output results for each test case
+for result in results:
+    print(result)
