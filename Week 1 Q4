@@ -1,0 +1,37 @@
+def min_operations_to_remove_black_cells(n, k, s):
+    # Initialize the count of 'B's in the first window of size k
+    current_b_count = sum(1 for i in range(k) if s[i] == 'B')
+    min_b_count = current_b_count
+    
+    # Slide the window across the string
+    for i in range(k, n):
+        # If the character going out of the window is 'B', decrement the count
+        if s[i - k] == 'B':
+            current_b_count -= 1
+        # If the character coming into the window is 'B', increment the count
+        if s[i] == 'B':
+            current_b_count += 1
+        # Update the minimum count of 'B's seen in any window of size k
+        min_b_count = min(min_b_count, current_b_count)
+    
+    return min_b_count
+
+# Reading input
+import sys
+input = sys.stdin.read
+data = input().split()
+
+t = int(data[0])
+index = 1
+results = []
+
+for _ in range(t):
+    n = int(data[index])
+    k = int(data[index + 1])
+    s = data[index + 2]
+    index += 3
+    results.append(min_operations_to_remove_black_cells(n, k, s))
+
+# Printing results
+for result in results:
+    print(result)
