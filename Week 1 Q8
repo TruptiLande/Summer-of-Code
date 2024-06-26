@@ -1,0 +1,27 @@
+def powerMod(a: str, b: int, m: int) -> int:
+    # Function to calculate (a^b) % m using modular exponentiation
+    def modular_exponentiation(base, exponent, mod):
+        result = 1
+        base = base % mod  # Update base if it is more than or equal to mod
+        while exponent > 0:
+            # If exponent is odd, multiply base with the result
+            if (exponent % 2) == 1:
+                result = (result * base) % mod
+            # Exponent must be even now
+            exponent = exponent >> 1  # Exponent = exponent // 2
+            base = (base * base) % mod  # Change base to base^2 % mod
+        return result
+    
+    # Step 1: Reduce the large number a mod m
+    reduced_a = 0
+    for char in a:
+        reduced_a = (reduced_a * 10 + int(char)) % m
+    
+    # Step 2: Use modular exponentiation to find (reduced_a^b) % m
+    result = modular_exponentiation(reduced_a, b, m)
+    
+    return result
+
+# Example usage:
+print(powerMod("3", 2, 4))  # Output: 1
+print(powerMod("8", 2, 6))  # Output: 4
