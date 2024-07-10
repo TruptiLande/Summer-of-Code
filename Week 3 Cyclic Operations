@@ -1,0 +1,17 @@
+def can_transform(n, k, b):
+    for value in b:
+        if value > k:
+            return "NO"
+    return "YES"
+
+# Read input
+t = int(input().strip())
+results = []
+for _ in range(t):
+    n, k = map(int, input().strip().split())
+    b = list(map(int, input().strip().split()))
+    results.append(can_transform(n, k, b))
+
+# Print results
+for result in results:
+    print(result)
