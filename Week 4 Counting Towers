@@ -1,0 +1,29 @@
+MOD = 1000000007
+
+def solve():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+    
+    t = int(data[0])
+    heights = list(map(int, data[1:t+1]))
+    max_n = max(heights)
+    
+    # Initialize dp array to store number of towers for each height up to max_n
+    dp = [0] * (max_n + 1)
+    dp[0] = 1  # Base case: 1 way to build a tower of height 0
+    if max_n >= 1:
+        dp[1] = 1  # Base case: 1 way to build a tower of height 1
+    
+    # Fill dp array using the recursive relation
+    for i in range(2, max_n + 1):
+        dp[i] = (dp[i-1] + dp[i-2]) % MOD
+    
+    # Output results for each test case
+    results = []
+    for n in heights:
+        results.append(dp[n])
+    
+    # Print all results
+    sys.stdout.write("\n".join(map(str, results)) + "\n")
+
