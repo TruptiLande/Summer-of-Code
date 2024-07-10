@@ -1,0 +1,18 @@
+def time_to_zero(n, heights):
+    max_time = 0
+    for i in range(n):
+        if i == 0 or heights[i] > heights[i - 1]:
+            max_time = max(max_time, heights[i] - 1)
+    return max_time
+
+# Read input
+t = int(input().strip())
+results = []
+for _ in range(t):
+    n = int(input().strip())
+    heights = list(map(int, input().strip().split()))
+    results.append(time_to_zero(n, heights))
+
+# Print results
+for result in results:
+    print(result)
