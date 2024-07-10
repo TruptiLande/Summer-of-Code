@@ -1,0 +1,41 @@
+from collections import deque
+
+def bfs(start, graph, n):
+    dist = [-1] * (n + 1)
+    queue = deque([start])
+    dist[start] = 0
+    
+    while queue:
+        current = queue.popleft()
+        for neighbor in graph[current]:
+            if dist[neighbor] == -1:  # not visited
+                dist[neighbor] = dist[current] + 1
+                queue.append(neighbor)
+    
+    return dist
+
+def can_valeriu_escape(n, a, b, roads):
+    graph = [[] for _ in range(n + 1)]
+    for u, v in roads:
+        graph[u].append(v)
+        graph[v].append(u)
+    
+    dist_from_a = bfs(a, graph, n)
+    dist_from_b = bfs(b, graph, n)
+    
+    for i in range(1, n + 1):
+        if dist_from_b[i] <= dist_from_a[i]:
+            return "NO"
+    return "YES"
+
+# Read input
+t = int(input().strip())
+results = []
+for _ in range(t):
+    n, a, b = map(int, input().strip().split())
+    roads = [tuple(map(int, input().strip().split())) for _ in range(n)]
+    results.append(can_valeriu_escape(n, a, b, roads))
+
+# Print results
+for result in results:
+    print(result)
