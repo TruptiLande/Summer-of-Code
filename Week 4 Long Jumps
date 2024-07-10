@@ -1,0 +1,26 @@
+def max_score(n, a):
+    # Create an array to store the maximum score starting from each index
+    score = [0] * n
+    
+    # Fill the score array from end to start
+    for i in range(n-1, -1, -1):
+        next_pos = i + a[i]
+        if next_pos < n:
+            score[i] = a[i] + score[next_pos]
+        else:
+            score[i] = a[i]
+    
+    # The result is the maximum value in the score array
+    return max(score)
+
+# Read input
+t = int(input().strip())
+results = []
+for _ in range(t):
+    n = int(input().strip())
+    a = list(map(int, input().strip().split()))
+    results.append(max_score(n, a))
+
+# Print results
+for result in results:
+    print(result)
