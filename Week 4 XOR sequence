@@ -1,0 +1,16 @@
+def longest_common_subsegment(x, y):
+    z = x ^ y
+    trailing_zeros = (z & -z).bit_length() - 1
+    return 1 << trailing_zeros
+
+# Read input
+t = int(input().strip())
+results = []
+
+for _ in range(t):
+    x, y = map(int, input().strip().split())
+    results.append(longest_common_subsegment(x, y))
+
+# Print results for all test cases
+for result in results:
+    print(result)
