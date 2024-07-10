@@ -1,0 +1,18 @@
+def count_ways_to_produce_sum(n, x, coins):
+    MOD = 10**9 + 7
+    dp = [0] * (x + 1)
+    dp[0] = 1  # Base case: one way to form sum 0 (use no coins)
+    
+    for i in range(1, x + 1):
+        for coin in coins:
+            if i - coin >= 0:
+                dp[i] = (dp[i] + dp[i - coin]) % MOD
+    
+    return dp[x]
+
+# Read input
+n, x = map(int, input().split())
+coins = list(map(int, input().split()))
+
+# Compute and print the result
+print(count_ways_to_produce_sum(n, x, coins))
